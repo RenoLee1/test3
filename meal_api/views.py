@@ -17,6 +17,16 @@ from rest_framework.permissions import IsAuthenticated
 
 from .serializers import LoginSerializer
 
+
+
+# get the SSL 
+class AcmeChallengeView(View):
+    def get(self, request, token, *args, **kwargs):
+        acme_challenge = get_object_or_404(models.AcmeChallenge, token=token)
+        return HttpResponse(acme_challenge.value, content_type='text/plain')
+
+
+
 class AcmeChallengeView(View):
     def get(self, request, token, *args, **kwargs):
         try:
