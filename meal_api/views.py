@@ -10,33 +10,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework.decorators import action
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.contrib.auth import authenticate
-from django.views import View
-from django.http import HttpResponse
+
 
 from rest_framework.permissions import IsAuthenticated
 
 from .serializers import LoginSerializer
 
 
-
-# get the SSL 
-class AcmeChallengeView(View):
-    def get(self, request, token, *args, **kwargs):
-        acme_challenge = get_object_or_404(models.AcmeChallenge, token=token)
-        return HttpResponse(acme_challenge.value, content_type='text/plain')
-
-
-
-class AcmeChallengeView(View):
-    def get(self, request, token, *args, **kwargs):
-        try:
-            # Replace with your actual token and token_value
-            if token == "PSANNsM50Gig2P6JkPJEEsBI9TM5AJLCgOtT3YR4Sjk":
-                return HttpResponse("YOUR_ACTUAL_TOKEN_VALUE_HERE", content_type='text/plain')
-            else:
-                return HttpResponse(status=404)
-        except Exception as e:
-            return HttpResponse(status=500)
 
 
 

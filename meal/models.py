@@ -1,13 +1,6 @@
 from django.db import models
 
 
-class AcmeChallenge(models.Model):
-    token = models.CharField(max_length=255, unique=True)
-    value = models.CharField(max_length=255)
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return self.token
 
 
 # Create your models here.
