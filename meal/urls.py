@@ -5,5 +5,6 @@ from django.urls import path
 app_name = 'meal'
 
 urlpatterns = [
-    path('', TemplateView.as_view(template_name="meal/index.html"))
+    path('', TemplateView.as_view(template_name="meal/index.html"),),
+
 ]

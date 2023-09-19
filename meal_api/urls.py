@@ -1,6 +1,7 @@
 from rest_framework import routers
 from . import views
-from django.urls import path, include
+from django.urls import path, include, re_path
+from .views import AcmeChallengeView
 
 app_name='meal_api'
 
@@ -16,5 +17,6 @@ urlpatterns = [
     path('logout/', views.LogoutAPIView.as_view(), name='logout'),
     path('forget_password/', views.ForgetPasswordAPIView.as_view(), name='forget_password'),
     path('bodyinfo/update/', views.BodyInfoViewSet.as_view({'post': 'update_body_info'}), name='update-body-info'),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    re_path(r'^.well-known/acme-challenge/(?P<token>[a-zA-Z0-9_-]+)$', AcmeChallengeView.as_view()),
 ]

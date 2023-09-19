@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from datetime import timedelta
+from django.conf import settings
 import dj_database_url
 import django_heroku
 
@@ -45,7 +47,31 @@ INSTALLED_APPS = [
     'meal_api',
     "django.contrib.sites",
     'rest_framework',
+    'rest_framework_simplejwt',
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=7),  # 访问令牌的有效期
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),  # 可刷新访问令牌的时间
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=7),  # 访问令牌的最长有效期
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(days=0),
+    'SLIDING_TOKEN_REFRESH_STRATEGY': 'sliding',
+    'SLIDING_TOKEN_REFRESH_ALGORITHM': 'HS256',
+    'SLIDING_TOKEN_ALGORITHM': 'HS256',
+    'SIGNING_KEY': settings.SECRET_KEY,
+    'VERIFYING_KEY': None,
+    'AUTH_HEADER_TYPES': ('Bearer',),
+    'ROTATE_REFRESH_TOKENS': True,  # 是否旋转刷新令牌
+    'ALGORITHM': 'HS256',  # 令牌算法
+    'ALLOW_REFRESH': True,  # 是否允许刷新访问令牌
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -62,7 +88,7 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -98,12 +124,24 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #         'PORT': 3306,
 #     }
 # }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'test1',
+#         'USER': 'moni',
+#         'PASSWORD': 'moni',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'test1',
-        'USER': 'moni',
-        'PASSWORD': 'moni',
+        'NAME': 'fitplate',
+        'USER': 'postgres',
+        'PASSWORD': 'liuchao',
+        'HOST': '127.0.0.1',
+        'PORT': 5432,
     }
 }
 
