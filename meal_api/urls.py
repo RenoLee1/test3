@@ -18,5 +18,5 @@ urlpatterns = [
     path('forget_password/', views.ForgetPasswordAPIView.as_view(), name='forget_password'),
     path('bodyinfo/update/', views.BodyInfoViewSet.as_view({'post': 'update_body_info'}), name='update-body-info'),
     path('', include(router.urls)),
-    re_path(r'^.well-known/acme-challenge/(?P<token>[a-zA-Z0-9_-]+)$', AcmeChallengeView.as_view()),
+    path('.well-known/acme-challenge/<str:token>/', AcmeChallengeView.as_view(), name='acme-challenge'),
 ]
